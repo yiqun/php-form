@@ -1,0 +1,30 @@
+<!Doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>Cascading selector</title>
+        <script src="jquery-1.9.1.min.js"></script>
+        <script src="cascadingSelector.min.js"></script>
+        <style>
+            body{
+                font-size: 12px;
+                line-height: 150%;
+            }
+        </style>
+        <script>
+            $(function () {
+                $('body').cascadingSelector({
+                    root:45,
+                    value:'4677',
+                    initialText:'请选择',
+                    after:function () {
+                        console.log($('body').cascadingSelector('getValue'))
+                    }
+                })
+            })
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

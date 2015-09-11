@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>body{padding:0;margin:0;overflow:hidden;background:#EEE;text-align:center;color:#AAA;font-family:Arial}#img{position:absolute;top:0;right:0;opacity:0;filter:alpha(opacity=0);direction:ltr}form{margin:0;padding:0}</style>
+	</head>
+	<body>
+		<font>+</font>
+		<form method="post" enctype="multipart/form-data">
+			<script>
+				function parseQueryString() {
+					var str = window.location.search;
+					var objURL = {};
+
+					str.replace(
+					new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+					function( $0, $1, $2, $3 ){
+						objURL[ $1 ] = $3;
+					}
+					);
+					return objURL;
+				}
+				function checkFileSize(obj) {
+					if (typeof FileReader !== "undefined" && obj.files[0].size > 1024*1024) {
+						alert('文件字节数大于1M');
+						return false;
+					}
+					return true;
+				}
+				var Q = parseQueryString();
+				document.write('<style>#img{font-size:'+(Number(Q.width)>
+				Number(Q.height) && Q.height|| Q.width)+'px}font{font-size:'+(Number(Q.width)> Number(Q.height) && Q.height||
+				Q.width)+'px;line-height:'+Q.height+'px}</style>');
+				document.write('<input name="uuid" value="'+Q['uuid']+'" type="hidden">');
+				document.write('<input name="img'+(Q['supportMulti']?'[]':'')+'" id="img" type="file"'+(Q['supportMulti']?' multiple':'')+' onchange="if(checkFileSize(this)){parent.imgUploader.preupload(\''+Q['uuid']+'\');document.getElementsByTagName(\'form\')[0].submit();}">');
+			</script>
+		</form>
+		<script>
+			document.getElementsByTagName('form')[0].setAttribute('action', decodeURIComponent(Q.uploadScript));
+		</script>
+	</body>
+</html>';
